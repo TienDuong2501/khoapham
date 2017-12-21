@@ -34,16 +34,30 @@ Route::get('dat-hang',['as' => 'dathang','uses' => 'PageController@getCheckOut']
 
 Route::post('dat-hang',['as' => 'dathang','uses' => 'PageController@postCheckOut']);
 
-Route::get('dangnhap',['as' => 'dangnhap','uses' => 'PageController@getLogin']);
-
-Route::post('dangnhap',['as' => 'dangnhap','uses' => 'PageController@postLogin']);
-
-Route::get('dangky',['as' => 'dangky','uses' => 'PageController@getDangKy']);
-
-Route::post('dangky',['as' => 'dangky','uses' => 'PageController@postDangKy']);
-
-Route::get('dangxuat',['as' => 'dangxuat','uses' => 'PageController@postDangXuat']);
-
 Route::get('timkiem',['as' => 'timkiem','uses' => 'PageController@getTimKiem']);
 
+// Route::get('dangnhap',['as' => 'dangnhap','uses' => 'PageController@getLogin']);
 
+// Route::post('dangnhap',['as' => 'dangnhap','uses' => 'PageController@postLogin']);
+
+// Route::get('dangky',['as' => 'dangky','uses' => 'PageController@getDangKy']);
+
+// Route::post('dangky',['as' => 'dangky','uses' => 'PageController@postDangKy']);
+
+// Route::get('dangxuat',['as' => 'dangxuat','uses' => 'PageController@postDangXuat']);
+
+
+
+Route::group(['prefix' => 'customer'], function () {
+  Route::get('/login', 'CustomerAuth\LoginController@showLoginForm')->name('login');
+  Route::post('/login', 'CustomerAuth\LoginController@login');
+  Route::post('/logout', 'CustomerAuth\LoginController@logout')->name('logout');
+
+  Route::get('/register', 'CustomerAuth\RegisterController@showRegistrationForm')->name('register');
+  Route::post('/register', 'CustomerAuth\RegisterController@register')->name('register');
+
+  Route::post('/password/email', 'CustomerAuth\ForgotPasswordController@sendResetLinkEmail')->name('password.request');
+  Route::post('/password/reset', 'CustomerAuth\ResetPasswordController@reset')->name('password.email');
+  Route::get('/password/reset', 'CustomerAuth\ForgotPasswordController@showLinkRequestForm')->name('password.reset');
+  Route::get('/password/reset/{token}', 'CustomerAuth\ResetPasswordController@showResetForm');
+});

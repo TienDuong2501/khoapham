@@ -161,12 +161,20 @@ class PageController extends Controller
     {
         $this->validate
         ($request,[
+
+
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|max:20',
             'fullname' => 'required',
-            're_password' => 'required|same:password'
+            'phone'   => 'required|min:10|max:11',
+            'address' => 'required',
+            're_password' => 'required|same:password',
         ],
         [
+            
+
+
+
             'email.required' => 'vui long nhap email',
             'email.email' => 'khogn dung dinh dang email',
             'email.unique' => 'email nay da co nguoi su dung',
@@ -176,18 +184,25 @@ class PageController extends Controller
             'password.max' => 'mat khau toi da 20 ky tu',
 
             'fullname.required' => 'dien vao ten cua ban',
+
+            'phone.required' => 'dien vao so dien thoai cua ban',
+            'phone.min' => 'sdt phai co it nhat 10 so',
+            'phone.max' => 'sdt khong qua 11 so',
+
+            'address.required'  => 'khong duoc de trong dia chi',
             
-            're_password.required' => 'nhap vao xac nhan mat khau',
-            're_password.same' => 'mat khau khong trung khop' 
+            're_password.required' => 'nhap  xac nhan mat khau',
+            're_password.same' => 'mat khau khong trung khop',
         ]);
 
         $user = new User();
 
-        $user->full_name = $request->fullName;
+        $user->full_name = $request->fullname;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->phone = $request->sdt;
+        $user->phone = $request->phone;
         $user->address = $request->address;
+        $user->remember_token = $request->_token;
         $user->save();
 
         return redirect()->back()->with('thongbao','tao tai khoan thanh cong');

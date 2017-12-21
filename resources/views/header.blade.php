@@ -11,14 +11,42 @@
 				</div>
 				<div class="pull-right auto-width-right">
 					<ul class="top-details menu-beta l-inline">
-						@if(Auth::check())
-						<li><a href="">Chào bạn {{ Auth::user()->full_name }}</a></li>
-						<li><a href="{{ route('dangxuat') }}">Đăng xuất</a></li>
-						{{-- <li><a href="#"><i class="fa fa-user"></i>Tài khoản</a></li> --}}
+						{{-- @if (Auth::guard('customer')->check())
+						{{-- <li><a href="">Chào bạn {{ Auth::user()->full_name }}</a></li> --}}
+						{{-- <li><a href="{{ route('logout') }}">Đăng xuất</a></li>
+						<li><a href="#"><i class="fa fa-user"></i>Tài khoản</a></li>
 						@else
-						<li><a href="{{ route('dangky') }}">Đăng kí</a></li>
-						<li><a href="{{ route('dangnhap') }}">Đăng nhập</a></li>
-						@endif
+						<li><a href="{{ route('register') }}">Đăng kí</a></li>
+						<li><a href="{{ route('login') }}">Đăng nhập</a></li>
+						@endif --}} 
+						@if (Auth::guard('customer')->check())
+                        
+					            <li><a href="{{ route('logout') }}"
+		                                        onclick="event.preventDefault();
+		                                                 document.getElementById('logout-form').submit();">
+		                                        Logout
+		                                    </a>
+
+		                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+		                                        {{ csrf_field() }}
+		                                    </form></li>
+					          
+		                                    {{-- <a href="{{ route('logout') }}"
+		                                        onclick="event.preventDefault();
+		                                                 document.getElementById('logout-form').submit();">
+		                                        Logout
+		                                    </a>
+
+		                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+		                                        {{ csrf_field() }}
+		                                    </form> --}}
+                       
+                    @else
+                        
+                        
+                        <li><a href="{{ route('login') }}">Login</a></li>
+                        <li><a href="{{ route('register') }}">Register</a></li>
+                    @endif
 					</ul>
 				</div>
 				<div class="clearfix"></div>
